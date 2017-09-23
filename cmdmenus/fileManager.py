@@ -1,5 +1,5 @@
-##########################################################
-#File manager functions
+import os
+from . import *
 
 def listDir(*args, **kwargs):
     ents = os.listdir(*args, **kwargs)

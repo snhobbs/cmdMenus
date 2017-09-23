@@ -98,11 +98,11 @@ class Menu(object):
 		return ''.join(screen)
 
 	def helpLine(self, columns):
-		for i in range(len(self.MenuOptions)):
+		for i, option in enumerate(self.MenuOptions):
 			y = ['%d'%(i+1)]
-			y.append( ("%s"%(self.numberedLine(self.MenuOptions[i].title, i + 1))) )
+			y.append( ("%s"%(self.numberedLine(option.title, i + 1))) )
 			y.append('\n')
-			y.append( ("\t   -%s"%('\n'.join(textwrap.wrap(self.MenuOptions[i].description)))) )
+			y.append( ("\t   -%s"%('\n'.join(textwrap.wrap(option.description)))) )
 			y.append('\n')
 			for obj in y:
 				yield obj
@@ -156,9 +156,3 @@ class Quit(MenuOption):
 
 	def run(self):
 		raise KeyboardInterrupt
-
-if ( __name__ == "__main__" ):
-
-	os.environ['program'] = os.getcwd()
-	db=sql.connect(host = "localhost", user = os.environ['user'], passwd = os.environ['pass'], db = os.environ['dataBase'])
-	DBCore(db).run()
