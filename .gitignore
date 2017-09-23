@@ -1,0 +1,7 @@
+*.py
+*.pyc
+*.swo
+*.swp
+
+cmdmenus.egg-info/
+__pycache__/

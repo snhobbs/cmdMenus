@@ -57,4 +57,19 @@ def fileManager(mode = 'SELECTDIR'):
         return fManagerGet(prompt = "Select a file", fileMustNotExist = False, fileMustExists = True, isDir = False)
     else:
         raise Exception('Unknown mode %s'%mode)
- 
+
+def getEncoding(fileName):
+    '''
+    return the encoding type of a file
+    '''
+    encodings = ['ascii','utf-8','cp1250']
+    for encoding in encodings:
+        try:
+            f = open(fileName, 'r', encoding=encoding)
+            f.read()
+            f.close()
+            return encoding
+        except Exception as E:
+            continue
+    return None
+

@@ -2,8 +2,8 @@
 '''
 Menu is the base for all menus, options are objects with a 'run' member function
 '''
-import subprocess, os, textwrap
-from heodb.interface import sysMessage, printToScreen, inputUniversal, calcScreen
+import os, textwrap
+from . import sysMessage, printToScreen, inputUniversal, calcScreen
 
 global linePad
 linePad = 50
