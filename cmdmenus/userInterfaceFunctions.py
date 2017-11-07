@@ -15,6 +15,8 @@ def getEncoding(fileName):
             f.read()
             f.close()
             return encoding
+        except IOError:
+            raise UserWarning("File Not Found")
         except Exception as E:
             continue
     return None
