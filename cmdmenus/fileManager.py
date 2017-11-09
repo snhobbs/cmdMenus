@@ -48,13 +48,21 @@ def fileManager(mode = 'SELECTDIR'):
                 return loc
 
     if mode == 'SELECTDIR':
-        return fManagerGet(prompt = "Enter a directory", fileMustNotExist = False, fileMustExists = False, isDir = True)
-
+        try:
+            return fManagerGet(prompt = "Enter a directory", fileMustNotExist = False, fileMustExists = False, isDir = True)
+        except PermissionError as E:
+            printToScreen('Permissions Error: {}'.format(E))
     elif mode == 'NEWFILE':
-        return fManagerGet(prompt = "Enter a file name", fileMustNotExist = True, fileMustExists = False, isDir = False)
+        try:
+            return fManagerGet(prompt = "Enter a file name", fileMustNotExist = True, fileMustExists = False, isDir = False)
+        except PermissionError as E:
+            printToScreen('Permissions Error: {}'.format(E))
 
     elif mode == 'SELECTFILE':
-        return fManagerGet(prompt = "Select a file", fileMustNotExist = False, fileMustExists = True, isDir = False)
+        try:
+            return fManagerGet(prompt = "Select a file", fileMustNotExist = False, fileMustExists = True, isDir = False)
+        except PermissionError as E:
+            printToScreen('Permissions Error: {}'.format(E))
     else:
         raise Exception('Unknown mode %s'%mode)
 
