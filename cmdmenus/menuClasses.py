@@ -11,16 +11,14 @@ class Menu(object):
 	'''
 	Menu is the base class for all menus
 	'''
-	def __init__(self, db, description, cursor):
-		self.db = db
+	def __init__(self, description, cursor):
 		self.cursor = cursor
 		self.title = "Hobbs ElectroOptics Database: %s"%(os.environ['dataBase'])
 		self.description = description
 		self.MenuOptions = []
 		self.GeneralOptions = []
 
-		self.SQLOption = self.addGeneralOption(SQLCall(db))
-		self.QuitOption = self.addGeneralOption(Quit(db))
+		self.QuitOption = self.addGeneralOption(Quit())
 
 	def run(self):
 		printToScreen(self.makeScreen())
@@ -44,8 +42,6 @@ class Menu(object):
 					if(self.MenuOptions[int(userInput) -1].clear):
 						os.system('clear')
 					self.MenuOptions[int(userInput) -1].run()
-					if(self.MenuOptions[int(userInput) -1].commit):
-						self.db.commit()
 				except KeyboardInterrupt:
 					break
 				except UserWarning as uw:
@@ -125,8 +121,7 @@ class Menu(object):
 		return ''.join(screen)
 
 class MenuOption(object):
-	def __init__(self, db = None, title = None, description = None, commit = False, clear = True):
-		self.db = db
+	def __init__(self, title = None, description = None, commit = False, clear = True):
 		self.title = title
 		self.description = description
 		self.commit = commit
@@ -134,7 +129,6 @@ class MenuOption(object):
 		self.typeCheck()
 
 	def typeCheck(self):
-
 		if(not type(self.commit) == bool):
 			raise UserWarning('commit must be a boolean')
 		if(not type(self.clear) == bool):
@@ -143,16 +137,9 @@ class MenuOption(object):
 	def run(self):
 		pass
 
-class SQLCall(MenuOption):
-	def __init__(self, db):
-		MenuOption.__init__(self, db, title = 'Enter MYSQL DB', description = 'Enter the MYSQL command line', commit = True, clear = True)
-
-	def run(self):
-		os.system('mysql -u $user -p$pass $dataBase')
-
 class Quit(MenuOption):
-	def __init__(self, db):
-		MenuOption.__init__(self, db, title = 'Quit', description = 'Return to previous menu', commit = True, clear = True)
+	def __init__(self):
+		MenuOption.__init__(self, title = 'Quit', description = 'Return to previous menu', commit = True, clear = True)
 
 	def run(self):
 		raise KeyboardInterrupt
